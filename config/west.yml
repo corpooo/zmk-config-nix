@@ -26,6 +26,9 @@ manifest:
       url-base: https://github.com/urob
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    - name: corpo-keebart
+      url-base: https://github.com/corpooo/zmk-keebart-boards
+      revision: 5-col
 
   projects:
     - name: zmk

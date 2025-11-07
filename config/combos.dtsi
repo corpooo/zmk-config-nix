@@ -1,66 +1,118 @@
-/*                KEY POSITIONS
+/*                                                  KEY POSITIONS
+Base combos
+╭─────────┬───────────┬───────────┬───────────┬──────────╮   ╭─────────┬───────────┬───────────┬───────────┬──────────╮
+│       ╭─┴─╮       ╭─┴─╮       ╭─┴─╮       ╭─┴─╮        │   │       ╭─┴─╮       ╭─┴─╮       ╭─┴─╮       ╭─┴─╮        │
+│  LT4  │   │  LT3  │   │  LT2  │   │  LT1  │   │  LT0   │   │  RT0  │   │  RT1  │   │  RT2  │   │  RT3  │   │  RT4   │
+│ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮  │   │ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮  │
+├─┤ & ├───┼───┤ @ ├───┼───┤ _ ├───┼───┤ $ ├───┼───┤ % ├──┤   ├─┤- _├───┼───┤ = ├───┼───┤ * ├───┼───┤ ` ├───┼───┤   ├──┤
+│ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯  │   │ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯  │
+│  LM4  │   │  LM3  │   │  LM2  │􀆧  │  LM1  │   │  LM0   │   │  RM0  │   │  RM1  │( <│  RM2  │) >│  RM3  │   │  RM4   │
+│ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮  │   │ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮  │
+├─┤ | ├───┼───┤ # ├───┼───┤ \ ├───┼───┤   ├───┼───┤ ~ ├──┤   ├─┤ + ├───┼───┤   ├───┼───┤ / ├───┼───┤   ├───┼───┤   ├──┤
+│ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯  │   │ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯  │
+│  LB4  │   │  LB3  │􀉂  │  LB2  │􀫵  │  LB1  │   │  LB0   │   │  RB0  │   │  RB1  │[ {│  RB2  │] }│  RB3  │   │   RB4  │
+│       ╰─┬─╯       ╰─┬─╯       ╰─┬─╯       ╰─┬─╯        │   │       ╰─┬─╯       ╰─┬─╯       ╰─┬─╯       ╰─┬─╯        │
+╰─────────┴───────────┼───────────┼───────────┼──────────┤   ├─────────┼───────────┼───────────┼───────────┴──────────╯
+                      │           │           │          │   │         │           │           │
+                      │    LH2    │    LH1    │    LH0   │   │  RH0    │    RH1    │    RH2    │
+                      │           │           │          │   │         │           │           │
+                      ╰───────────┴───────────┴──────────╯   ╰─────────┴───────────┴───────────╯
 
-  ╭─────────────────────╮ ╭─────────────────────╮
-  │ LT4 LT3 LT2 LT1 LT0 │ │ RT0 RT1 RT2 RT3 RT4 │
-  │ LM4 LM3 LM2 LM1 LM0 │ │ RM0 RM1 RM2 RM3 RM4 │
-  │ LB4 LB3 LB2 LB1 LB0 │ │ RB0 RB1 RB2 RB3 RB4 │
-  ╰───────╮ LH2 LH1 LH0 │ │ RH0 RH1 RH2 ╭───────╯
-          ╰─────────────╯ ╰─────────────╯ */
+Mixes:
+  LM1 + RM1 = Caps Word
+*/
 
 #define COMBO_TERM_FAST 18
 #define COMBO_TERM_SLOW 30
 
 #define COMBO_IDLE_FAST 150
 #define COMBO_IDLE_SLOW 50
+#define ALL 0xff
 
-/* Horizontal combos - left hand */
-ZMK_COMBO(esc,   &kp ESC,      LT3 LT2,     DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(mouse, &smart_mouse, LT2 LT1,     DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+#define COMBO_HOR(NAME, TAP, POS) \
+    ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 
-// Combos overlapping HRMs are set up as hold-taps themselves to allow for instantaneous
-// chording of mods. Custom hold-tap instances can be bootstrapped on the go using the
-// 8-argument version of ZMK_COMBO defined in base.keymap.
-ZMK_COMBO(tab,   &hml LS(LALT)TAB, LM3 LM2, DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(ldr,   &leader,      LM2 LM1,     DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST, LS(LCTRL),    KEYS_R)
-ZMK_COMBO(ldrsh, &leader_sft,  LM3 LM2 LM1, DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST, LS(LC(LALT)), KEYS_R)
+#define COMBO_VER(NAME, TAP, POS) \
+    ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
 
-ZMK_COMBO(cut,   &kp LC(X),    LB3 LB1,     DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(copy,  &kp LC(INS),  LB3 LB2,     DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(paste, &kp LS(INS),  LB2 LB1,     DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+#define COMBO_MIX(NAME, TAP, POS) \
+    COMBO_VER(NAME, TAP, POS)
 
-/* Horizontal combos - right hand */
-ZMK_COMBO(bspc,  &kp BSPC,     RT1 RT2,     DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(del,   &kp DEL,      RT2 RT3,     DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+#define COMBO_HML(NAME, TAP, POS, HOLD) \
+    ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST, HOLD, KEYS_R)
 
-ZMK_COMBO(lpar,  &lpar_lt,     RM1 RM2,     DEF     NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST, RS(LCTRL),    KEYS_L)
-ZMK_COMBO(rpar,  &rpar_gt,     RM2 RM3,     DEF     NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST, RS(LALT),     KEYS_L)
-ZMK_COMBO(lt,    &kp LT,       RM1 RM2,         NAV    , COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(gt,    &kp GT,       RM2 RM3,         NAV    , COMBO_TERM_FAST, COMBO_IDLE_FAST)
+#define COMBO_HMR(NAME, TAP, POS, HOLD) \
+    ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST, HOLD, KEYS_L)
 
-ZMK_COMBO(lbkt,  &kp LBKT,     RB1 RB2,     DEF     NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(rbkt,  &kp RBKT,     RB2 RB3,     DEF     NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(lbrc,  &kp LBRC,     RB1 RB2,         NAV    , COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(rbrc,  &kp RBRC,     RB2 RB3,         NAV    , COMBO_TERM_FAST, COMBO_IDLE_FAST)
 
-/* Vertical combos - left hand */
-ZMK_COMBO(at,    &kp AT,       LT3 LM3,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
-ZMK_COMBO(hash,  &kp HASH,     LT2 LM2,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
-ZMK_COMBO(dllr,  &kp DLLR,     LT1 LM1,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
-ZMK_COMBO(prcnt, &kp PRCNT,    LT0 LM0,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
+#define HML_COMBO(NAME, TAP, POS, HOLD) \
+    ZMK_COMBO(NAME, &hml HOLD TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 
-ZMK_COMBO(grave, &kp GRAVE,    LM3 LB3,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
-ZMK_COMBO(bslh,  &kp BSLH,     LM2 LB2,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
-ZMK_COMBO(equal, &kp EQUAL,    LM1 LB1,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
-ZMK_COMBO(tilde, &kp TILDE,    LM0 LB0,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
+#define HMR_COMBO(NAME, TAP, POS, HOLD) \
+    ZMK_COMBO(NAME, &hmr HOLD TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 
-/* Vertical combos - right hand */
-ZMK_COMBO(caret, &kp CARET,    RT0 RM0,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
-ZMK_COMBO(plus,  &kp PLUS,     RT1 RM1,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
-ZMK_COMBO(star,  &kp STAR,     RT2 RM2,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
-ZMK_COMBO(amps,  &kp AMPS,     RT3 RM3,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
 
-ZMK_COMBO(under, &kp UNDER,    RM0 RB0,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
-ZMK_COMBO(minus, &kp MINUS,    RM1 RB1,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
-ZMK_COMBO(fslh,  &kp FSLH,     RM2 RB2,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
-ZMK_COMBO(pipe,  &kp PIPE,     RM3 RB3,     DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
+// Tap: left/right parenthesis | Shft + tap: less-than/greater-than. 
+SHIFT_MORPH(lpar_lt, &kp LPAR, &kp LT)
+SHIFT_MORPH(rpar_gt, &kp RPAR, &kp GT)
+
+// Mix
+// LM1 + RM1 = Caps Word
+COMBO_VER(capsword, &caps_word, LM1 RM1)
+
+
+// Left horizontal combos
+// LM2 + LM1 = Escape | Home row mods: Left Cmd + Left Shift
+HMR_COMBO(esc,      ESC,        LM2 LM1, LS(LCMD))
+// LB2 + LB1 = Paste (cmd + v)
+COMBO_HOR(paste,    &kp LG(V),  LB2 LB1)
+// LB3 + LB2 = Copy (cmd + c)
+COMBO_HOR(copy,     &kp LG(C),  LB3 LB2)
+
+// Left vertical combos
+// LT4 + LM4 = ampersand (&)
+COMBO_VER(amp,      &kp AMPS,   LT4 LM4)
+// LT3 + LM3 = at (@)
+COMBO_VER(at,       &kp AT,     LT3 LM3)
+// LT2 + LM2 = underscore (_)
+COMBO_VER(under,    &kp UNDER,  LT2 LM2)
+// LT1 + LM1 = dollar sign ($)
+COMBO_VER(dollar,   &kp DLLR,   LT1 LM1)
+// LT0 + LM0 = percent (%)
+COMBO_VER(percent,  &kp PRCNT,  LT0 LM0)
+// LM4 + LB4 = pipe (|)
+COMBO_VER(pipe,     &kp PIPE,   LM4 LB4)
+// LM3 + LB3 = hash (#)
+COMBO_VER(hash,     &kp HASH,   LM3 LB3)
+// LM2 + LB2 = backslash (\)
+COMBO_VER(bkslash,  &kp BSLH,   LM2 LB2)
+// LM0 + LB0 = tilde (~)
+COMBO_VER(tilde,    &kp TILDE,  LM0 LB0)
+
+
+// Right horizontal combos
+// RM1 + RM2 = ( | Shft + tap: <
+COMBO_HMR(lpar,     &lpar_lt,   RM1 RM2, RS(RCMD))
+// RM2 + RM3 = ) | Shft + tap: >
+COMBO_HMR(rpar,     &rpar_gt,   RM2 RM3, RA(RCMD))
+// RB1 + RB2 = [ | Shft + tap: {
+COMBO_HOR(lbkt,     &kp LBKT,   RB1 RB2)
+// RB2 + RB3 = ] | Shft + tap: }
+COMBO_HOR(rbkt,     &kp RBKT,   RB2 RB3)
+// RT2 + RT3 = esc
+COMBO_HOR(r_esc,    &kp ESC,    RT2 RT3)
+
+// Right vertical combos
+// RT0 + RM0 = -
+COMBO_VER(dash,     &kp MINUS,  RT0 RM0)
+// RT1 + RM1 = =
+COMBO_VER(equal,    &kp EQUAL,  RT1 RM1)
+// RT2 + RM2 = *
+COMBO_VER(asterisk, &kp STAR,   RT2 RM2)
+// RT3 + RM3 = `
+COMBO_VER(backtick, &kp GRAVE,  RT3 RM3)
+// RM4 + RB4 = +
+COMBO_VER(plus,     &kp PLUS,   RM0 RB0)
+// RM2 + RB2 = /
+COMBO_VER(slash,    &kp SLASH,  RM2 RB2)
 

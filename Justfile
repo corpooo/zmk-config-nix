@@ -14,7 +14,7 @@ _parse_targets $expr:
     echo "$(yq -r "$filter" build.yaml | grep -v "^," | grep -i "${expr/#all/.*}")"
 
 # build firmware for single board & shield combination
-_build_single $board $shield $snippet $artifact *west_args:
+_build_single $board $shield $snippet $artifact $keebart_boards *west_args:
     #!/usr/bin/env bash
     set -euo pipefail
     artifact="${artifact:-${shield:+${shield// /+}-}${board}}"
@@ -22,7 +22,7 @@ _build_single $board $shield $snippet $artifact *west_args:
 
     echo "Building firmware for $artifact..."
     west build -s zmk/app -d "$build_dir" -b $board {{ west_args }} ${snippet:+-S "$snippet"} -- \
-        -DZMK_CONFIG="{{ config }}" ${shield:+-DSHIELD="$shield"}
+        -DZMK_CONFIG="{{ config }}" ${shield:+-DSHIELD="$shield"} ${keebart_boards:+-DZMK_EXTRA_MODULES="$keebart_boards"}
 
     if [[ -f "$build_dir/zephyr/zmk.uf2" ]]; then
         mkdir -p "{{ out }}" && cp "$build_dir/zephyr/zmk.uf2" "{{ out }}/$artifact.uf2"
@@ -31,7 +31,19 @@ _build_single $board $shield $snippet $artifact *west_args:
     fi
 
 # build firmware for matching targets
-build expr *west_args:
+build expr keebart_boards *west_args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    targets=$(just _parse_targets {{ expr }})
+
+    [[ -z $targets ]] && echo "No matching targets found. Aborting..." >&2 && exit 1
+    echo "$targets" | while IFS=, read -r board shield snippet artifact; do
+        just _build_single "$board" "$shield" "$snippet" "$artifact" {{ keebart_boards }} {{ west_args }}
+    done
+
+
+# build firmware for matching targets
+build-ka expr *west_args:
     #!/usr/bin/env bash
     set -euo pipefail
     targets=$(just _parse_targets {{ expr }})
