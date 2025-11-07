@@ -26,9 +26,8 @@ manifest:
       url-base: https://github.com/urob
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: corpo-keebart
-      url-base: https://github.com/corpooo/zmk-keebart-boards
-      revision: 5-col
+    - name: corpo
+      url-base: https://github.com/corpooo/
 
   projects:
     - name: zmk
@@ -48,6 +47,11 @@ manifest:
       path: modules/zmk/tri-state
     - name: zmk-unicode
       path: modules/zmk/unicode
+
+    - name: zmk-keebart-boards
+      path: modules/zmk/keebart
+      remote: corpo
+      revision: 5-col
 
     # Only source necessary Zephyr modules. Remove this entire section to restore
     # the default (needed for less common hardware).
