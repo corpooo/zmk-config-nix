@@ -1,7 +1,11 @@
 #include "key-labels/corne-choc-bt-pro.h"
 #include "base.keymap"
 
-/ { chosen { zmk,physical-layout = &five_col_layout; }; };
+/ {
+    chosen {
+      zmk,physical-layout = &five_col_layout;
+    };
+};
 
 / {
     keymap {
