@@ -42,10 +42,6 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 
 #include "combos.dtsi" // Must be sourced after HRM-combo hack.
 
-// &caps_word { // Mods deactivate caps-word, requires PR #1451. [TODO: rebase]
-//   /delete-property/ ignore-modifiers;
-// };
-
 // tap: dot | shft+tap: colon
 SHIFT_MORPH(dot_colon, &kp DOT, &kp COLON)
 // tap: comma | shft+tap: semi
