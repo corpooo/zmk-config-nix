@@ -3,7 +3,6 @@
 
 / { chosen { zmk,physical-layout = &five_col_layout; }; };
 
-
 / {
     keymap {
         compatible = "zmk,keymap";
