@@ -1,3 +1,40 @@
+// vim: ft=c
+
+#define COMBO_TERM_FAST 18
+#define COMBO_TERM_SLOW 30
+
+#define COMBO_IDLE_FAST 150
+#define COMBO_IDLE_SLOW 50
+#define ALL 0xff
+
+#define COMBO_HOR(NAME, TAP, POS) \
+    ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+
+#define COMBO_VER(NAME, TAP, POS) \
+    ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
+
+#define COMBO_MIX(NAME, TAP, POS) \
+    COMBO_VER(NAME, TAP, POS)
+
+#define COMBO_HML(NAME, TAP, POS, HOLD) \
+    ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST, HOLD, KEYS_R)
+
+#define COMBO_HMR(NAME, TAP, POS, HOLD) \
+    ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST, HOLD, KEYS_L)
+
+#define HML_COMBO_BY_LAYER(NAME, TAP, POS, HOLD, LAYER) \
+    ZMK_COMBO(NAME, &hml HOLD TAP, POS, LAYER, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+
+#define HMR_COMBO_BY_LAYER(NAME, TAP, POS, HOLD, LAYER) \
+    ZMK_COMBO(NAME, &hmr HOLD TAP, POS, LAYER, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+
+#define HML_COMBO(NAME, TAP, POS, HOLD) \
+    HML_COMBO_BY_LAYER(NAME, TAP, HOLD, POS, ALL)
+
+#define HMR_COMBO(NAME, TAP, POS, HOLD) \
+    HML_COMBO_BY_LAYER(NAME, TAP, HOLD, POS, ALL)
+
+
 /*                                                  KEY POSITIONS
 Base combos
 ╭─────────┬───────────┬───────────┬───────────┬──────────╮   ╭─────────┬───────────┬───────────┬───────────┬──────────╮
@@ -22,97 +59,39 @@ Mixes:
   LM1 + RM1 = Caps Word
 */
 
-#define COMBO_TERM_FAST 18
-#define COMBO_TERM_SLOW 30
-
-#define COMBO_IDLE_FAST 150
-#define COMBO_IDLE_SLOW 50
-#define ALL 0xff
-
-#define COMBO_HOR(NAME, TAP, POS) \
-    ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-
-#define COMBO_VER(NAME, TAP, POS) \
-    ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
-
-#define COMBO_MIX(NAME, TAP, POS) \
-    COMBO_VER(NAME, TAP, POS)
-
-#define COMBO_HML(NAME, TAP, POS, HOLD) \
-    ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST, HOLD, KEYS_R)
-
-#define COMBO_HMR(NAME, TAP, POS, HOLD) \
-    ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST, HOLD, KEYS_L)
-
-
-#define HML_COMBO(NAME, TAP, POS, HOLD) \
-    ZMK_COMBO(NAME, &hml HOLD TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-
-#define HMR_COMBO(NAME, TAP, POS, HOLD) \
-    ZMK_COMBO(NAME, &hmr HOLD TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-
-
-// Tap: left/right parenthesis | Shft + tap: less-than/greater-than. 
-SHIFT_MORPH(lpar_lt, &kp LPAR, &kp LT)
-SHIFT_MORPH(rpar_gt, &kp RPAR, &kp GT)
-
 // Mix
-// LM1 + RM1 = Caps Word
-COMBO_VER(capsword, &caps_word, LM1 RM1)
-
-
+COMBO_VER(capsword, &caps_word,     LM1 RM1) // LM1 + RM1 = Caps Word
 // Left horizontal combos
-// LM2 + LM1 = Escape | Home row mods: Left Cmd + Left Shift
-HMR_COMBO(esc,      ESC,        LM2 LM1, LS(LCMD))
-// LB2 + LB1 = Paste (cmd + v)
-COMBO_HOR(paste,    &kp LG(V),  LB2 LB1)
-// LB3 + LB2 = Copy (cmd + c)
-COMBO_HOR(copy,     &kp LG(C),  LB3 LB2)
-
+HMR_COMBO(esc,      ESC,            LM2 LM1, LS(LCMD)) // LM2 + LM1 = Escape | Home row mods: Left Cmd + Left Shift
+COMBO_HOR(paste,    &kp LG(V),      LB2 LB1) // LB2 + LB1 = Paste (cmd + v)
+COMBO_HOR(copy,     &kp LG(C),      LB3 LB2) // LB3 + LB2 = Copy (cmd + c)
 // Left vertical combos
-// LT4 + LM4 = ampersand (&)
-COMBO_VER(amp,      &kp AMPS,   LT4 LM4)
-// LT3 + LM3 = at (@)
-COMBO_VER(at,       &kp AT,     LT3 LM3)
-// LT2 + LM2 = underscore (_)
-COMBO_VER(under,    &kp UNDER,  LT2 LM2)
-// LT1 + LM1 = dollar sign ($)
-COMBO_VER(dollar,   &kp DLLR,   LT1 LM1)
-// LT0 + LM0 = percent (%)
-COMBO_VER(percent,  &kp PRCNT,  LT0 LM0)
-// LM4 + LB4 = pipe (|)
-COMBO_VER(pipe,     &kp PIPE,   LM4 LB4)
-// LM3 + LB3 = hash (#)
-COMBO_VER(hash,     &kp HASH,   LM3 LB3)
-// LM2 + LB2 = backslash (\)
-COMBO_VER(bkslash,  &kp BSLH,   LM2 LB2)
-// LM0 + LB0 = tilde (~)
-COMBO_VER(tilde,    &kp TILDE,  LM0 LB0)
-
+COMBO_VER(amp,      &kp AMPS,       LT4 LM4) // LT4 + LM4 = ampersand (&)
+COMBO_VER(at,       &kp AT,         LT3 LM3) // LT3 + LM3 = at (@)
+COMBO_VER(under,    &kp UNDER,      LT2 LM2) // LT2 + LM2 = underscore (_)
+COMBO_VER(dollar,   &kp DLLR,       LT1 LM1) // LT1 + LM1 = dollar sign ($)
+COMBO_VER(percent,  &kp PRCNT,      LT0 LM0) // LT0 + LM0 = percent (%)
+COMBO_VER(pipe,     &kp PIPE,       LM4 LB4) // LM4 + LB4 = pipe (|)
+COMBO_VER(hash,     &kp HASH,       LM3 LB3) // LM3 + LB3 = hash (#)
+COMBO_VER(bkslash,  &kp BSLH,       LM2 LB2) // LM2 + LB2 = backslash (\)
+COMBO_VER(tilde,    &kp TILDE,      LM0 LB0) // LM0 + LB0 = tilde (~)
 
 // Right horizontal combos
-// RM1 + RM2 = ( | Shft + tap: <
-COMBO_HMR(lpar,     &lpar_lt,   RM1 RM2, RS(RCMD))
-// RM2 + RM3 = ) | Shft + tap: >
-COMBO_HMR(rpar,     &rpar_gt,   RM2 RM3, RA(RCMD))
-// RB1 + RB2 = [ | Shft + tap: {
-COMBO_HOR(lbkt,     &kp LBKT,   RB1 RB2)
-// RB2 + RB3 = ] | Shft + tap: }
-COMBO_HOR(rbkt,     &kp RBKT,   RB2 RB3)
-// RT2 + RT3 = esc
-COMBO_HOR(r_esc,    &kp ESC,    RT2 RT3)
+COMBO_HMR(lpar,     &lpar_lt,       RM1 RM2, RS(RCMD)) // RM1 + RM2 = ( | Shft + tap: <
+COMBO_HOR(lthan,    &kp LT,         RM0 RM1) // RM0 + RM1 = <
+COMBO_HMR(rpar,     &rpar_gt,       RM2 RM3, RA(RCMD)) // RM2 + RM3 = ) | Shft + tap: >
+COMBO_HOR(gthan,    &kp GT,         RM3 RM4) // RM3 + RM4 = >
+COMBO_HOR(lbkt,     &kp LBKT,       RB1 RB2) // RB1 + RB2 = [ | Shft + tap: {
+COMBO_HOR(lcbt,     &kp LS(LBKT),   RB0 RB1) // RB0 + RB1 =  {
+COMBO_HOR(rbkt,     &kp RBKT,       RB2 RB3) // RB2 + RB3 = ] | Shft + tap: }
+COMBO_HOR(rcbt,     &kp LS(RBKT),   RB3 RB4) // RB3 + RB4 =  {
+COMBO_HOR(r_esc,    &kp ESC,        RT2 RT3) // RT2 + RT3 = esc
 
 // Right vertical combos
-// RT0 + RM0 = -
-COMBO_VER(dash,     &kp MINUS,  RT0 RM0)
-// RT1 + RM1 = =
-COMBO_VER(equal,    &kp EQUAL,  RT1 RM1)
-// RT2 + RM2 = *
-COMBO_VER(asterisk, &kp STAR,   RT2 RM2)
-// RT3 + RM3 = `
-COMBO_VER(backtick, &kp GRAVE,  RT3 RM3)
-// RM4 + RB4 = +
-COMBO_VER(plus,     &kp PLUS,   RM0 RB0)
-// RM2 + RB2 = /
-COMBO_VER(slash,    &kp SLASH,  RM2 RB2)
+COMBO_VER(dash,     &kp MINUS,      RT0 RM0) // RT0 + RM0 = -
+COMBO_VER(equal,    &kp EQUAL,      RT1 RM1) // RT1 + RM1 = =
+COMBO_VER(asterisk, &kp STAR,       RT2 RM2) // RT2 + RM2 = *
+COMBO_VER(backtick, &kp GRAVE,      RT3 RM3) // RT3 + RM3 = `
+COMBO_VER(plus,     &kp PLUS,       RM0 RB0) // RM4 + RB4 = +
+COMBO_VER(slash,    &kp SLASH,      RM2 RB2) // RM2 + RB2 = /
 

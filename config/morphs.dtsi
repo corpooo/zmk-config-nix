@@ -1,0 +1,12 @@
+// vim: ft=c
+
+// Tap: left/right parenthesis | Shft + tap: less-than/greater-than. 
+SHIFT_MORPH(lpar_lt, &kp LPAR, &kp LT)
+SHIFT_MORPH(rpar_gt, &kp RPAR, &kp GT)
+
+// tap: dot | shft+tap: colon
+SHIFT_MORPH(dot_colon, &kp DOT, &kp COLON)
+// tap: comma | shft+tap: semi
+SHIFT_MORPH(comma_semi, &kp COMMA, &kp SEMI)
+// tap: question mark | shft+tap: exclamation mark
+SHIFT_MORPH(qmark_emark, &kp QMARK, &kp EXCL)
