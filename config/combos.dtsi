@@ -1,5 +1,3 @@
-// vim: ft=c
-
 #define COMBO_TERM_FAST 18
 #define COMBO_TERM_SLOW 30
 
@@ -16,11 +14,15 @@
 #define COMBO_MIX(NAME, TAP, POS) \
     COMBO_VER(NAME, TAP, POS)
 
+// HRM combos to be used with mod-morphs.
+
 #define COMBO_HML(NAME, TAP, POS, HOLD) \
     ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST, HOLD, KEYS_R)
 
 #define COMBO_HMR(NAME, TAP, POS, HOLD) \
     ZMK_COMBO(NAME, TAP, POS, ALL, COMBO_TERM_FAST, COMBO_IDLE_FAST, HOLD, KEYS_L)
+
+// HRM combos to be used with actual keys.
 
 #define HML_COMBO_BY_LAYER(NAME, TAP, POS, HOLD, LAYER) \
     ZMK_COMBO(NAME, &hml HOLD TAP, POS, LAYER, COMBO_TERM_FAST, COMBO_IDLE_FAST)
@@ -29,23 +31,23 @@
     ZMK_COMBO(NAME, &hmr HOLD TAP, POS, LAYER, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 
 #define HML_COMBO(NAME, TAP, POS, HOLD) \
-    HML_COMBO_BY_LAYER(NAME, TAP, HOLD, POS, ALL)
+    HML_COMBO_BY_LAYER(NAME, TAP, POS, HOLD, ALL)
 
 #define HMR_COMBO(NAME, TAP, POS, HOLD) \
-    HML_COMBO_BY_LAYER(NAME, TAP, HOLD, POS, ALL)
+    HML_COMBO_BY_LAYER(NAME, TAP, POS, HOLD, ALL)
 
 
 /*                                                  KEY POSITIONS
 Base combos
 ╭─────────┬───────────┬───────────┬───────────┬──────────╮   ╭─────────┬───────────┬───────────┬───────────┬──────────╮
 │       ╭─┴─╮       ╭─┴─╮       ╭─┴─╮       ╭─┴─╮        │   │       ╭─┴─╮       ╭─┴─╮       ╭─┴─╮       ╭─┴─╮        │
-│  LT4  │   │  LT3  │   │  LT2  │   │  LT1  │   │  LT0   │   │  RT0  │   │  RT1  │   │  RT2  │   │  RT3  │   │  RT4   │
+│  LT4  │   │  LT3  │􁂈  │  LT2  │􁂒  │  LT1  │   │  LT0   │   │  RT0  │   │  RT1  │   │  RT2  │􀆧  │  RT3  │   │  RT4   │
 │ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮  │   │ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮  │
 ├─┤ & ├───┼───┤ @ ├───┼───┤ _ ├───┼───┤ $ ├───┼───┤ % ├──┤   ├─┤- _├───┼───┤ = ├───┼───┤ * ├───┼───┤ ` ├───┼───┤   ├──┤
 │ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯  │   │ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯  │
 │  LM4  │   │  LM3  │   │  LM2  │􀆧  │  LM1  │   │  LM0   │   │  RM0  │   │  RM1  │( <│  RM2  │) >│  RM3  │   │  RM4   │
 │ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮  │   │ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮ ╰─┬─╯ ╭───╮  │
-├─┤ | ├───┼───┤ # ├───┼───┤ \ ├───┼───┤   ├───┼───┤ ~ ├──┤   ├─┤ + ├───┼───┤   ├───┼───┤ / ├───┼───┤   ├───┼───┤   ├──┤
+├─┤ | ├───┼───┤ # ├───┼───┤ \ ├───┼───┤ ~ ├───┼───┤   ├──┤   ├─┤ + ├───┼───┤ { ├───┼───┤ / ├───┼───┤ } ├───┼───┤   ├──┤
 │ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯  │   │ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯ ╭─┴─╮ ╰───╯  │
 │  LB4  │   │  LB3  │􀉂  │  LB2  │􀫵  │  LB1  │   │  LB0   │   │  RB0  │   │  RB1  │[ {│  RB2  │] }│  RB3  │   │   RB4  │
 │       ╰─┬─╯       ╰─┬─╯       ╰─┬─╯       ╰─┬─╯        │   │       ╰─┬─╯       ╰─┬─╯       ╰─┬─╯       ╰─┬─╯        │
@@ -62,7 +64,8 @@ Mixes:
 // Mix
 COMBO_VER(capsword, &caps_word,     LM1 RM1) // LM1 + RM1 = Caps Word
 // Left horizontal combos
-HMR_COMBO(esc,      ESC,            LM2 LM1, LS(LCMD)) // LM2 + LM1 = Escape | Home row mods: Left Cmd + Left Shift
+COMBO_HOR(l_esc,    &kp BSPC,       LT2 LT3) // LT2 + LT3 = backspace
+COMBO_HOR(l_esc,    &kp DEL,        LT1 LT2) // LT1 + LT2 = delete
 COMBO_HOR(paste,    &kp LG(V),      LB2 LB1) // LB2 + LB1 = Paste (cmd + v)
 COMBO_HOR(copy,     &kp LG(C),      LB3 LB2) // LB3 + LB2 = Copy (cmd + c)
 // Left vertical combos
@@ -74,7 +77,7 @@ COMBO_VER(percent,  &kp PRCNT,      LT0 LM0) // LT0 + LM0 = percent (%)
 COMBO_VER(pipe,     &kp PIPE,       LM4 LB4) // LM4 + LB4 = pipe (|)
 COMBO_VER(hash,     &kp HASH,       LM3 LB3) // LM3 + LB3 = hash (#)
 COMBO_VER(bkslash,  &kp BSLH,       LM2 LB2) // LM2 + LB2 = backslash (\)
-COMBO_VER(tilde,    &kp TILDE,      LM0 LB0) // LM0 + LB0 = tilde (~)
+COMBO_VER(tilde,    &kp TILDE,      LM1 LB1) // LM1 + LB1 = tilde (~)
 
 // Right horizontal combos
 COMBO_HMR(lpar,     &lpar_lt,       RM1 RM2, RS(RCMD)) // RM1 + RM2 = ( | Shft + tap: <
@@ -82,9 +85,7 @@ COMBO_HOR(lthan,    &kp LT,         RM0 RM1) // RM0 + RM1 = <
 COMBO_HMR(rpar,     &rpar_gt,       RM2 RM3, RA(RCMD)) // RM2 + RM3 = ) | Shft + tap: >
 COMBO_HOR(gthan,    &kp GT,         RM3 RM4) // RM3 + RM4 = >
 COMBO_HOR(lbkt,     &kp LBKT,       RB1 RB2) // RB1 + RB2 = [ | Shft + tap: {
-COMBO_HOR(lcbt,     &kp LS(LBKT),   RB0 RB1) // RB0 + RB1 =  {
 COMBO_HOR(rbkt,     &kp RBKT,       RB2 RB3) // RB2 + RB3 = ] | Shft + tap: }
-COMBO_HOR(rcbt,     &kp LS(RBKT),   RB3 RB4) // RB3 + RB4 =  {
 COMBO_HOR(r_esc,    &kp ESC,        RT2 RT3) // RT2 + RT3 = esc
 
 // Right vertical combos
@@ -94,4 +95,14 @@ COMBO_VER(asterisk, &kp STAR,       RT2 RM2) // RT2 + RM2 = *
 COMBO_VER(backtick, &kp GRAVE,      RT3 RM3) // RT3 + RM3 = `
 COMBO_VER(plus,     &kp PLUS,       RM0 RB0) // RM4 + RB4 = +
 COMBO_VER(slash,    &kp SLASH,      RM2 RB2) // RM2 + RB2 = /
+COMBO_VER(slash,    &kp SLASH,      RM2 RB2) // RM2 + RB2 = /
+COMBO_VER(lcbt,     &kp LS(LBKT),   RM1 RB1) // RM1 + RB1 =  {
+COMBO_VER(rcbt,     &kp LS(RBKT),   RM3 RB3) // RM3 + RB3 =  }
 
+
+
+
+
+
+
+/* vim: set ft=c tw=146: */
