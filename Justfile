@@ -13,6 +13,13 @@ _parse_targets $expr:
     filter="(($attrs | map(. // [.]) | combinations), ((.include // {})[] | $attrs)) | join(\",\")"
     echo "$(yq -r "$filter" build.yaml | grep -v "^," | grep -i "${expr/#all/.*}")"
 
+# parse build.yaml and filter targets by expression
+_parse_flash_targets $expr:
+    #!/usr/bin/env bash
+    attrs="[.board, .shield, .snippet, .\"artifact-name\", .\"flash-volume\"]"
+    filter="(($attrs | map(. // [.]) | combinations), ((.include // {})[] | $attrs)) | join(\",\")"
+    echo "$(yq -r "$filter" build.yaml | grep -v "^," | grep -i "${expr/#all/.*}")"
+
 # build firmware for single board & shield combination
 _build_single $board $shield $snippet $artifact *west_args:
     #!/usr/bin/env bash
@@ -39,6 +46,34 @@ build expr *west_args:
     [[ -z $targets ]] && echo "No matching targets found. Aborting..." >&2 && exit 1
     echo "$targets" | while IFS=, read -r board shield snippet artifact; do
         just _build_single "$board" "$shield" "$snippet" "$artifact" {{ west_args }}
+    done
+
+
+# flash firmware for matching targets
+flash expr:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    targets=$(just _parse_flash_targets {{ expr }})
+
+    [[ -z $targets ]] && echo "No matching targets found. Aborting..." >&2 && exit 1
+    echo "$targets" | while IFS=, read -r board shield snippet artifact flash_volume; do
+        artifact="${artifact:-${shield:+${shield// /+}-}${board}}"
+        file="{{ out }}/$artifact.uf2"
+
+        echo "Please insert the $artifact ($flash_volume) device..."
+
+        while ! ls /Volumes | grep -q "$flash_volume"; do
+          echo "Waiting for $flash_volume to connect..."
+          sleep 2
+        done
+
+        echo "Flashing $file to /Volumes/$flash_volume..."
+        cp "$file" "/Volumes/$flash_volume/"
+
+        while ls /Volumes | grep -q "$flash_volume"; do
+          echo "Waiting for $flash_volume to disconnect..."
+          sleep 2
+        done
     done
 
 # clear build cache and artifacts

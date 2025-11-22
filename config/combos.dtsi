@@ -64,10 +64,13 @@ Mixes:
 // Mix
 COMBO_VER(capsword, &caps_word,     LM1 RM1) // LM1 + RM1 = Caps Word
 // Left horizontal combos
-COMBO_HOR(l_esc,    &kp BSPC,       LT2 LT3) // LT2 + LT3 = backspace
-COMBO_HOR(l_esc,    &kp DEL,        LT1 LT2) // LT1 + LT2 = delete
+COMBO_HOR(bspc,     &kp BSPC,       LT2 LT3) // LT2 + LT3 = backspace
+COMBO_HOR(del,      &kp DEL,        LT1 LT2) // LT1 + LT2 = delete
+HML_COMBO(lthan,    LT,             LM3 LM2, LG(LALT)) // LM3 + LM2 = <
+HML_COMBO(gthan,    GT,             LM2 LM1, LG(LSHFT)) // LM2 + LM1 = >
 COMBO_HOR(paste,    &kp LG(V),      LB2 LB1) // LB2 + LB1 = Paste (cmd + v)
 COMBO_HOR(copy,     &kp LG(C),      LB3 LB2) // LB3 + LB2 = Copy (cmd + c)
+COMBO_HOR(cut,      &kp LG(X),      LB3 LB1) // LB3 + LB2 = Cut (cmd + x)
 // Left vertical combos
 COMBO_VER(amp,      &kp AMPS,       LT4 LM4) // LT4 + LM4 = ampersand (&)
 COMBO_VER(at,       &kp AT,         LT3 LM3) // LT3 + LM3 = at (@)
@@ -81,9 +84,7 @@ COMBO_VER(tilde,    &kp TILDE,      LM1 LB1) // LM1 + LB1 = tilde (~)
 
 // Right horizontal combos
 COMBO_HMR(lpar,     &lpar_lt,       RM1 RM2, RS(RCMD)) // RM1 + RM2 = ( | Shft + tap: <
-COMBO_HOR(lthan,    &kp LT,         RM0 RM1) // RM0 + RM1 = <
 COMBO_HMR(rpar,     &rpar_gt,       RM2 RM3, RA(RCMD)) // RM2 + RM3 = ) | Shft + tap: >
-COMBO_HOR(gthan,    &kp GT,         RM3 RM4) // RM3 + RM4 = >
 COMBO_HOR(lbkt,     &kp LBKT,       RB1 RB2) // RB1 + RB2 = [ | Shft + tap: {
 COMBO_HOR(rbkt,     &kp RBKT,       RB2 RB3) // RB2 + RB3 = ] | Shft + tap: }
 COMBO_HOR(r_esc,    &kp ESC,        RT2 RT3) // RT2 + RT3 = esc
@@ -105,4 +106,4 @@ COMBO_VER(rcbt,     &kp LS(RBKT),   RM3 RB3) // RM3 + RB3 =  }
 
 
 
-/* vim: set ft=c tw=146: */
+/* vim: set ft=cpp tw=146: */

@@ -9,7 +9,8 @@
 
 #define DEF 0
 #define NAV 1
-#define SYS 2
+#define NUM 2
+#define SYS 3
 
 #define XXX &none
 #define ___ &trans
